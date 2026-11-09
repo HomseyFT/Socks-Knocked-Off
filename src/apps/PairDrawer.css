@@ -1,0 +1,172 @@
+.drawer-app {
+  display: grid;
+  grid-template-columns: minmax(240px, 340px) minmax(0, 1fr);
+  gap: 24px;
+}
+
+.drawer-app__input {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.drawer-app__input .btn {
+  align-self: flex-start;
+}
+
+.drawer-app__label {
+  font-weight: 600;
+}
+
+.drawer-app__label small,
+.drawer-app__hint {
+  color: var(--ink-soft);
+  font-weight: 400;
+}
+
+.drawer-app__input textarea {
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.modes {
+  display: grid;
+  gap: 8px;
+}
+
+.mode {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 14px;
+  border: 3px solid var(--ink);
+  border-radius: 16px;
+  background: var(--panel);
+  text-align: left;
+  cursor: pointer;
+}
+
+.mode small {
+  color: var(--ink-soft);
+}
+
+.mode[aria-checked='true'] {
+  background: var(--blue);
+  box-shadow: 0 4px 0 var(--ink);
+}
+
+.mode[aria-checked='true'] small {
+  color: var(--ink);
+}
+
+.mode:focus-visible { outline: 3px dashed var(--ink); outline-offset: 2px; }
+
+.drawer-app__output {
+  min-height: 320px;
+  padding: 16px;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(color-mix(in srgb, var(--orange) 30%, var(--panel)), color-mix(in srgb, var(--orange) 18%, var(--panel)));
+  box-shadow: inset 0 8px 0 rgb(0 0 0 / 0.08);
+}
+
+.drawer-app__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 100%;
+  min-height: 280px;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.drawer-app__empty .sock {
+  animation: sway 3s ease-in-out infinite;
+}
+
+.pairs,
+.gifts {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pairs {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.pair,
+.gift {
+  padding: 12px;
+  border: 3px solid var(--ink);
+  border-radius: 18px;
+  background: var(--panel);
+  box-shadow: 0 4px 0 var(--ink);
+  animation: tumble-in 0.7s cubic-bezier(0.3, 1.5, 0.5, 1) var(--delay) backwards;
+}
+
+@keyframes tumble-in {
+  from { transform: rotate(-540deg) scale(0); opacity: 0; }
+}
+
+.pair__socks {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.pair__member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 1 90px;
+  min-width: 0;
+  gap: 4px;
+  text-align: center;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.pair__member--flip .sock {
+  transform: scaleX(-1);
+}
+
+.pair__note {
+  display: block;
+  margin-top: 8px;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.gift {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gift__reveal {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 10px;
+  border: 2px dashed var(--ink);
+  border-radius: 10px;
+  background: var(--yellow);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.gift__reveal[aria-expanded='true'] {
+  border-style: solid;
+  background: var(--green);
+}
+
+@media (max-width: 760px) {
+  .drawer-app { grid-template-columns: 1fr; }
+}

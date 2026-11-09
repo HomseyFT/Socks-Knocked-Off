@@ -1,0 +1,130 @@
+.dryer-app {
+  display: grid;
+  grid-template-columns: minmax(240px, 360px) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.machine {
+  padding: 16px;
+  border: 3px solid var(--ink);
+  border-radius: 28px;
+  background: color-mix(in srgb, var(--blue) 25%, var(--panel));
+  box-shadow: 0 6px 0 var(--ink);
+}
+
+.machine__panel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 14px;
+  margin-bottom: 18px;
+  border-bottom: 3px solid var(--ink);
+}
+
+.machine__knob {
+  width: 30px;
+  height: 30px;
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  background: conic-gradient(var(--ink) 0 8%, var(--yellow) 8% 100%);
+}
+
+.machine__light {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--green);
+  animation: blink 1.2s steps(2) infinite;
+}
+
+@keyframes blink {
+  50% { background: var(--panel); }
+}
+
+.machine__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.machine__door {
+  aspect-ratio: 1;
+  padding: 14px;
+  border: 6px solid var(--ink);
+  border-radius: 50%;
+  background: var(--panel);
+}
+
+.machine__drum {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 30%, rgb(255 255 255 / 0.7), transparent 40%),
+    color-mix(in srgb, var(--blue) 40%, var(--panel));
+}
+
+.machine__drum.is-spinning {
+  animation: spin 2.4s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.machine__sock {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-32%) rotate(30deg);
+}
+
+.dryer-app__empty {
+  padding: 40px 0;
+  color: var(--ink-soft);
+  font-size: 1.15rem;
+  font-style: italic;
+}
+
+.lost {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+}
+
+.lost__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border: 3px solid var(--ink);
+  border-radius: 16px;
+  background: var(--panel);
+}
+
+.lost__title {
+  flex: 1;
+}
+
+.lint-confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border: 3px solid var(--ink);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--pink) 20%, var(--panel));
+}
+
+@media (max-width: 760px) {
+  .dryer-app { grid-template-columns: 1fr; }
+  .machine { max-width: 320px; margin: 0 auto; }
+}

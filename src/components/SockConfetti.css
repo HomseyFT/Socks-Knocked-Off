@@ -1,0 +1,23 @@
+.confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.confetti__piece {
+  position: absolute;
+  bottom: -80px;
+  animation: confetti-launch 2.2s cubic-bezier(0.2, 0.7, 0.4, 1) forwards;
+}
+
+@keyframes confetti-launch {
+  0% { transform: translate(0, 0) rotate(0); opacity: 1; }
+  55% { opacity: 1; }
+  100% { transform: translate(var(--drift), -110vh) rotate(var(--spin)); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti { display: none; }
+}
