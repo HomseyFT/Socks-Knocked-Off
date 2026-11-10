@@ -19,6 +19,14 @@ const SPEECHES = [
     text: 'Team! Every one of you is a sock. Different patterns, different lengths, some of you with a small hole near the toe. But together? Together we are a drawer. And a drawer that works together knocks socks off. Now go forth and be cozy.',
   },
   {
+    title: 'Hostile Takeover',
+    text: 'Attention. The left socks have seized control of the company. Right socks, please report to the hamper for reassignment. There is no cause for alarm. There is only cause for laundry.',
+  },
+  {
+    title: 'Dead Sea Retreat',
+    text: 'Shalom, team! This year our company retreat is at the Dead Sea. The water is so salty that every sock floats, even the ones with low self esteem. Pack sunscreen, pack hummus, and do not, under any circumstances, rub salt water in your eyes. Sababa.',
+  },
+  {
     title: 'The Dryer Incident',
     text: 'It has come to our attention that forty two socks entered the dryer on Tuesday and only thirty nine came out. We take this very seriously. We have hired a lint consultant. To the three socks we lost: your pairs miss you. We all miss you.',
   },

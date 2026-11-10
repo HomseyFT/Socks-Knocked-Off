@@ -17,6 +17,13 @@ export function PatternTile({ id, pattern, accent }) {
     zigzag: [20, 14, <polyline points="0,10 5,4 10,10 15,4 20,10" fill="none" stroke={accent} strokeWidth="3" />],
     hearts: [20, 20, <path d="M10 16 L4 10 A3 3 0 0 1 10 6 A3 3 0 0 1 16 10 Z" fill={accent} />],
     stars: [20, 20, <polygon points="10,3 12,8 17,8 13,11 15,16 10,13 5,16 7,11 3,8 8,8" fill={accent} />],
+    magen: [
+      24, 24,
+      <g fill="none" stroke={accent} strokeWidth="1.8" strokeLinejoin="round">
+        <polygon points="12,4 19,16 5,16" />
+        <polygon points="12,20 5,8 19,8" />
+      </g>,
+    ],
   }
   const [w, h, shape] = tiles[pattern]
   return (

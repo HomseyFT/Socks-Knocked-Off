@@ -1,0 +1,60 @@
+.gremlin {
+  position: fixed;
+  left: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  animation: gremlin-run 7s linear forwards;
+}
+
+.gremlin--reverse {
+  animation-name: gremlin-run-reverse;
+}
+
+.gremlin--reverse {
+  flex-direction: row-reverse;
+}
+
+.gremlin--reverse .gremlin__body {
+  transform: scaleX(-1);
+}
+
+.gremlin--reverse .gremlin__loot {
+  margin: 0 -14px 0 0;
+}
+
+.gremlin__body {
+  animation: gremlin-hop 0.25s ease-in-out infinite alternate;
+}
+
+.gremlin__loot {
+  margin-left: -14px;
+  animation: wiggle 0.3s ease-in-out infinite;
+}
+
+.gremlin:focus-visible {
+  outline: 3px dashed var(--ink);
+  outline-offset: 4px;
+}
+
+@keyframes gremlin-run {
+  from { transform: translateX(-140px); }
+  to { transform: translateX(calc(100vw + 40px)); }
+}
+
+@keyframes gremlin-run-reverse {
+  from { transform: translateX(calc(100vw + 40px)); }
+  to { transform: translateX(-140px); }
+}
+
+@keyframes gremlin-hop {
+  to { translate: 0 -10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gremlin { display: none; }
+}

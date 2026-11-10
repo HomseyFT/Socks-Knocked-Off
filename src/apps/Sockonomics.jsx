@@ -165,7 +165,7 @@ function Ticker() {
   )
 }
 
-export default function Sockonomics({ tasks }) {
+export default function Sockonomics({ tasks, gremlins }) {
   const t = useCopy()
   const days = useMemo(() => {
     return lastDays().map((date) => {
@@ -188,6 +188,7 @@ export default function Sockonomics({ tasks }) {
     { label: 'Knocked off this week', value: week, color: 'var(--yellow)' },
     { label: 'Knock-off rate', value: `${rate}%`, color: 'var(--blue)' },
     { label: 'Lost to the dryer', value: count('dryer'), color: 'var(--purple)' },
+    { label: 'Gremlins apprehended', value: gremlins, color: '#a3e635' },
   ]
 
   return (

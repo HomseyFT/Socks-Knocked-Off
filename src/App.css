@@ -10,6 +10,7 @@
   --green: #7ee081;
   --purple: #b388ff;
   --orange: #ff8c42;
+  --teal: #3ddbd9;
   --rope: #b07d4f;
   --font: 'Fredoka', system-ui, sans-serif;
   --radius: 22px;
@@ -29,6 +30,7 @@
   --green: #7d8b4f;
   --purple: #8a6a7f;
   --orange: #a8693a;
+  --teal: #5f8a7f;
   --rope: #6e5640;
   --font: 'IM Fell English', Georgia, serif;
 }
@@ -98,8 +100,30 @@ button, input, textarea, select {
 
 .masthead__logo {
   display: inline-block;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
   animation: logo-kick 2.4s ease-in-out infinite;
   transform-origin: 50% 10%;
+}
+
+.masthead__logo:active { animation-duration: 0.2s; }
+.masthead__logo:focus-visible { outline: 3px dashed var(--ink); outline-offset: 4px; }
+
+.masthead__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.masthead__gremlins {
+  padding: 6px 12px;
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  background: #a3e635;
+  font-weight: 500;
 }
 
 @keyframes logo-kick {
@@ -123,6 +147,11 @@ button, input, textarea, select {
   color: var(--ink-soft);
   font-size: 1.05rem;
   margin-top: 4px;
+  animation: tagline-in 0.5s ease-out;
+}
+
+@keyframes tagline-in {
+  from { opacity: 0; transform: translateY(6px); }
 }
 
 /* ---- drawer tabs ---- */
@@ -139,7 +168,7 @@ button, input, textarea, select {
   --tab: var(--pink);
   position: relative;
   flex-shrink: 0;
-  padding: 14px 18px 10px;
+  padding: 14px 14px 10px;
   border: 3px solid var(--ink);
   border-bottom: none;
   border-radius: 18px 18px 0 0;
@@ -157,6 +186,8 @@ button, input, textarea, select {
 .drawer__tab:nth-child(3) { --tab: var(--blue); }
 .drawer__tab:nth-child(4) { --tab: var(--green); }
 .drawer__tab:nth-child(5) { --tab: var(--purple); }
+.drawer__tab:nth-child(6) { --tab: var(--orange); }
+.drawer__tab:nth-child(7) { --tab: var(--teal); }
 
 .drawer__tab:hover { transform: translateY(2px); }
 .drawer__tab[aria-current='page'] { transform: translateY(0); z-index: 1; }
@@ -249,6 +280,15 @@ button, input, textarea, select {
 @keyframes sway {
   0%, 100% { transform: rotate(-3deg); }
   50% { transform: rotate(3deg); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-8deg); }
+  50% { transform: rotate(8deg); }
+}
+
+@keyframes pop-in {
+  from { transform: scale(0.6); opacity: 0; }
 }
 
 .burst {

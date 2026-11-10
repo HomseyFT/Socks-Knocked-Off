@@ -1,22 +1,29 @@
 import { useCallback, useEffect, useState } from 'react'
+import Sockinko from './apps/sockinko/Sockinko'
 import Clothesline from './apps/Clothesline'
 import PuppetBoardroom from './apps/PuppetBoardroom'
+import Sockstrology from './apps/Sockstrology'
 import PairDrawer from './apps/PairDrawer'
 import Sockonomics from './apps/Sockonomics'
 import Dryer from './apps/Dryer'
 import Sock from './components/Sock'
 import SockConfetti from './components/SockConfetti'
+import SockGremlin from './components/SockGremlin'
 import { COPY, CopyContext } from './lib/copy'
 import { usePersistentReducer, usePersistentState } from './lib/storage'
 import { seedTasks, tasksReducer } from './lib/tasks'
 
 const APPS = [
+  { key: 'sockinko', icon: '🎯', Component: Sockinko },
   { key: 'clothesline', icon: '🧺', Component: Clothesline },
   { key: 'puppet', icon: '🎭', Component: PuppetBoardroom },
+  { key: 'sockstrology', icon: '🔮', Component: Sockstrology },
   { key: 'pairing', icon: '🧦', Component: PairDrawer },
   { key: 'sockonomics', icon: '📈', Component: Sockonomics },
   { key: 'dryer', icon: '🌀', Component: Dryer },
 ]
+
+const TAGLINE_MS = 5000
 
 const tabFromHash = () => {
   const key = window.location.hash.slice(1)
@@ -33,20 +40,38 @@ function useHashTab() {
   return tab
 }
 
+function useRotatingIndex(length, ms) {
+  const [index, setIndex] = useState(0)
+  useEffect(() => {
+    const timer = setInterval(() => setIndex((i) => i + 1), ms)
+    return () => clearInterval(timer)
+  }, [ms])
+  return index % length
+}
+
 export default function App() {
   const tab = useHashTab()
   const [gaslight, setGaslight] = usePersistentState('sockoffice.gaslight', false)
+  const [gremlins, setGremlins] = usePersistentState('sockoffice.gremlins', 0)
   const [tasks, dispatch] = usePersistentReducer('sockoffice.tasks', tasksReducer, seedTasks)
-  const [celebrations, setCelebrations] = useState(0)
+  const [celebration, setCelebration] = useState(null)
   const copy = gaslight ? COPY.victorian : COPY.modern
+  const tagline = copy.taglines[useRotatingIndex(copy.taglines.length, TAGLINE_MS)]
 
   useEffect(() => {
     document.documentElement.dataset.theme = gaslight ? 'gaslight' : 'sock'
     document.title = copy.appName
   }, [gaslight, copy.appName])
 
-  const celebrate = useCallback(() => setCelebrations((n) => n + 1), [])
-  const endCelebration = useCallback(() => setCelebrations(0), [])
+  const celebrate = useCallback(
+    (message, count = 28) => setCelebration({ id: Date.now(), message: message ?? copy.knockedOff, count }),
+    [copy.knockedOff],
+  )
+  const endCelebration = useCallback(() => setCelebration(null), [])
+  const catchGremlin = useCallback(() => {
+    setGremlins((n) => n + 1)
+    celebrate('GREMLIN APPREHENDED!')
+  }, [setGremlins, celebrate])
 
   const { Component } = APPS.find((a) => a.key === tab)
   const dryerCount = tasks.filter((t) => t.status === 'dryer').length
@@ -56,17 +81,27 @@ export default function App() {
       <div className="shell">
         <header className="masthead">
           <div className="masthead__brand">
-            <span className="masthead__logo">
+            <button className="masthead__logo" onClick={() => celebrate(copy.knockedOff, 12)} aria-label="Kick the logo sock">
               <Sock seed="logo" look={{ base: '#ff5fa2', accent: '#ffd23f', pattern: 'stripes' }} height={64} />
-            </span>
+            </button>
             <div>
               <h1 className="masthead__title">{copy.appName}</h1>
-              <p className="masthead__tagline">{copy.tagline}</p>
+              <p key={tagline} className="masthead__tagline">{tagline}</p>
             </div>
           </div>
-          <button className="btn btn--ghost" onClick={() => setGaslight((g) => !g)} aria-pressed={gaslight}>
-            🕯️ {copy.gaslight}
-          </button>
+          <div className="masthead__actions">
+            {gremlins > 0 && (
+              <span className="masthead__gremlins">
+                👾 {copy.gremlins}: <strong>{gremlins}</strong>
+              </span>
+            )}
+            <button className="btn btn--pink" onClick={() => celebrate(`${copy.storm.toUpperCase()}!!!`, 90)}>
+              🌪️ {copy.storm}
+            </button>
+            <button className="btn btn--ghost" onClick={() => setGaslight((g) => !g)} aria-pressed={gaslight}>
+              🕯️ {copy.gaslight}
+            </button>
+          </div>
         </header>
 
         <nav className="drawer" aria-label="Apps">
@@ -79,17 +114,19 @@ export default function App() {
         </nav>
 
         <main className="stage">
-          <Component tasks={tasks} dispatch={dispatch} celebrate={celebrate} />
+          <Component tasks={tasks} dispatch={dispatch} celebrate={celebrate} gremlins={gremlins} />
         </main>
 
         <footer className="footer">{copy.footer}</footer>
       </div>
 
-      {celebrations > 0 && (
+      <SockGremlin onCatch={catchGremlin} />
+
+      {celebration && (
         <>
-          <SockConfetti key={celebrations} onDone={endCelebration} />
-          <div key={`burst-${celebrations}`} className="burst" role="status">
-            {copy.knockedOff}
+          <SockConfetti key={celebration.id} count={celebration.count} onDone={endCelebration} />
+          <div key={`burst-${celebration.id}`} className="burst" role="status">
+            {celebration.message}
           </div>
         </>
       )}
